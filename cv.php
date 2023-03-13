@@ -19,6 +19,8 @@
     $readyToMove = true;
     $mail = "example@gmail.com";
     $telephone = "+380981357896";
+
+    $skills = ["HTML", "CSS", "JavaScript"];
     ?>
     <h1 class="fullName"> <?php echo $fullName; ?></h1>
     <div class="block-image">
@@ -77,6 +79,16 @@
             echo $telephone;
         ?>
         </p>
+</div>
+<div class="skills">
+    <p class="skills-title">Уміння</p>
+    <ul class="list-skills">
+        <?php
+        foreach ($skills as $value)
+            echo " <li class='list-item'>$value</li>";
+        ?>
+    </ul>
+
 </div>
 </body>
 </html>
