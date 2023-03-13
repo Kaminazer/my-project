@@ -10,7 +10,9 @@
     $fullName = "Король Назарій Володимирович";
     $photo = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpAUnmYLsOz_IqvwB_EQu84fpgg1855WYUfg&usqp=CAU;";
     $requiredJobPosition = "Junior php-developer";
-    $about ="Мені 21 рік. Студент 5-ого курсу Національного авіаційного університету за спеціальністю: \"Комп'ютерна інженерія \"";
+    $about ="Я ентузіаст і уважний до деталей Junior php-developer, який шукає посаду початкового рівня в компанії, 
+             щоб використовувати свої навички в кодуванні, вирішенні складних проблем і допомагати у своєчасному 
+             завершенні проектів.";
     $requiredSalaryLevel = 500;
     $workExperience = 0.5;
     $placeOfResidence ="Камінь-Каширський, Волинська область";
@@ -24,15 +26,15 @@
     </div>
 
     <div>
-        <span> <?php echo $requiredJobPosition;?></span>
-        <p class="about">
+        <p> <?php echo $requiredJobPosition;?></p>
+        <div class="about">
             <span><b>Коротко про мене</b> </span> <br>
             <?php
                 echo <<<HEREDOC
                 $about
                 HEREDOC ;
             ?>
-        </p>
+        </div>
 
         <p class="salary">
             <b>Бажаний рівень заробітної плати: </b>
