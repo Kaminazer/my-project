@@ -7,6 +7,7 @@
 </head>
 <body>
     <?php
+    include_once 'header.php';
     $fullName = "Король Назарій Володимирович";
     $photo = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpAUnmYLsOz_IqvwB_EQu84fpgg1855WYUfg&usqp=CAU;";
     $requiredJobPosition = "Junior php-developer";
@@ -91,5 +92,8 @@
 
 </div>
 </body>
+<?php
+ require_once "footer.php";
+?>
 </html>
 
