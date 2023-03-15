@@ -33,9 +33,7 @@
         <div class="about">
             <span><b>Коротко про мене</b> </span> <br>
             <?php
-                echo <<<HEREDOC
-                $about
-                HEREDOC ;
+                echo $about ;
             ?>
         </div>
 
@@ -65,6 +63,8 @@
             <?php
                 if ($readyToMove)
                     echo "готовий";
+                else
+                    echo " не готовий";
             ?>
         </p>
 
