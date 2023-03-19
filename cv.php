@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>CV</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
-<body>
+
+<?php
+//$time = date('H');
+$theme = "";
+$time = 10;
+if ($time<18 && $time>6 )
+{
+    $theme = "day";
+}
+elseif ($time>18 | $time<6)
+    $theme = "night";
+?>
+<body class="<?php echo $theme; ?>">
     <?php
     include_once 'header.php';
     $fullName = "Король Назарій Володимирович";
@@ -93,7 +105,7 @@
 </div>
 </body>
 <?php
- require_once "footer.php";
+    require_once "footer.php";
 ?>
 </html>
 
