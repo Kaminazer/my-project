@@ -7,14 +7,13 @@
 </head>
 
 <?php
-//$time = date('H');
+$time = date('H');
 $theme = "";
-$time = 10;
-if ($time<18 && $time>6 )
+if ($time<18 && $time >= 6 )
 {
     $theme = "day";
 }
-elseif ($time>18 | $time<6)
+else
     $theme = "night";
 ?>
 <body class="<?php echo $theme; ?>">
