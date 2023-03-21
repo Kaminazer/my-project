@@ -1,5 +1,5 @@
 <?php
-echo  "Main  branch".PHP_EOL;
+echo  "main  branch".PHP_EOL;
 echo "Second branch" . PHP_EOL;
 echo "other change" . PHP_EOL;
 
