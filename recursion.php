@@ -1,19 +1,14 @@
 <?php
-function recursion(int $variable):array
+function recursion(int $variable)
 {
-    $count = 1;
-    $factorial = 1;
-    if ($variable == 0)
-        $factorial = 0;
+    if ($variable <= 0)
+        return 1;
     else
-    {
-        while ($count < $variable)
-        {
-            $factorial = $factorial * ($count + 1);
-            $count++;
-        }
-    }
-    return [$factorial,$variable];
+            $factorial = $variable * recursion($variable - 1);
+    return $factorial;
 }
-$result= recursion(rand(0, 50));
-echo "Факторіал числа " .$result[1] ." дорівнює: ".$result[0];
+$variable = rand(0, 50);
+$result= recursion($variable);
+echo "Факторіал числа " .$variable ." дорівнює: ".$result;
+
+
