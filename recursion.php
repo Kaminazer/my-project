@@ -2,7 +2,6 @@
 function recursion(int $variable):array
 {
     $count = 1;
-    $result = 1;
     $factorial = 1;
     if ($variable == 0)
         $factorial = 0;
@@ -10,9 +9,7 @@ function recursion(int $variable):array
     {
         while ($count < $variable)
         {
-            $result = $factorial;
-            $factorial = $result * ($count + 1);
-          //  echo $factorial.PHP_EOL;
+            $factorial = $factorial * ($count + 1);
             $count++;
         }
     }
