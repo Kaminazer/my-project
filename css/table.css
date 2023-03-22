@@ -1,0 +1,15 @@
+
+table,th,td{
+    border: 1px solid grey;
+    text-align:center;
+}
+
+th,td{
+    padding:10px;
+    font-size: 17px;
+}
+tr:first-child,th{
+    background: orange;
+    font-weight: bold;
+}
+
