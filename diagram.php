@@ -21,12 +21,12 @@ function randomColor():string
 }
 function makeDiagram(array $data):void
 {
-    for($i = 2000; $i <= 2023; $i++)
+    foreach ($data as $key => $value)
     {
         echo '<div class="chart-item">';
-        echo "<p>$i рік, $data[$i]%</p>";
+        echo "<p>$key рік, $value%</p>";
         echo '<div class="pipe">';
-        echo "<div style=\"width:".$data[$i]."%;background-color:".randomColor()."\">";
+        echo "<div style=\"width:".$value."%;background-color:".randomColor()."\">";
         echo "</div>";
         echo "</div>";
     }
