@@ -4,7 +4,7 @@ const CONVERTER_MODE_LOWERCASE = 2; // Всі символи у нижньому
 const CONVERTER_MODE_UPPERFIRSTCASE = 3; // Перший символ рядка у верхньому регістрі, решта у нижньому
 const CONVERTER_MODE_EWERYWORDCASE = 4; // Перший символ кожного слова у верхньому регістрі, решта у нижньому
 const CONVERTER_MODE_INVERTCASE = 5; // Кожен символ у інвертованому регістрі
-function stringConverter($string, $mode)
+function stringConverter(string $string, int $mode)
 {
     switch ($mode){
         case 1:
