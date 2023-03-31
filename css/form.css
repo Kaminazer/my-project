@@ -1,0 +1,6 @@
+.correct{
+    border: green solid 2px;
+}
+.error{
+    border: red solid 2px ;
+}
