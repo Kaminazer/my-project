@@ -101,12 +101,32 @@ include 'validFunction.php';
             $validData[] ="";
         }
 
+        if (!empty($_FILES["avatar"])) {
+            $blacklist = ['.php', '.phtml', '.php3', '.php4'];
+            $errorFile = false;
+            foreach ($blacklist as $ext) {
+                if (str_contains($_FILES['avatar']['name'], $ext)) {
+                    $errorFile = true;
+                    $errors[] = "Обрано недопустимий формат файлу , а саме .php, .phtml, .php3, .php4";
+                    $status['avatar'] = 'error';
+                }
+            }
+            if (!$errorFile) {
+                $fileName = $_SERVER['DOCUMENT_ROOT'] . "/image/" . $_FILES["avatar"]["name"];
+                if (!(move_uploaded_file($_FILES["avatar"]["tmp_name"], $fileName))) {
+                    $errors[] = "Невдалося перемістити файл";
+                }
+            }
+        }
+
         if (!empty($errors)){
             foreach ($errors as $error) {
                 echo "<p> $error </p>";
             }
         } else {
             $hideForm = true;
+            $image = "/image/" . $_FILES["avatar"]["name"];
+            echo "<img  class =\"image\" src = \"$image\" alt='avatar'>";
             echo "<p>Користувач: " .$user['firstName']
                 ." "
                 .$user['lastName']
@@ -130,7 +150,7 @@ include 'validFunction.php';
     <body>
     <?php if (!$hideForm) { ?>
         <h1>Create new user</h1>
-        <form action="form.php" method="post">
+        <form action="form.php" method="post" enctype="multipart/form-data">
             <label for="POST-name">Ім'я</label><br>
             <input class="<?php echo $status['name'];?>" id="POST-name" type="text" name="firstName"
                    value="<?php echo $validData[0];?>"><br> <br>
@@ -161,6 +181,7 @@ include 'validFunction.php';
             <label for="POST-date">Дата народження</label><br>
             <input class="<?php echo $status['date'];?>" id="POST-date" type="date" name="birthDate"
                    value="<?php echo $validData[5];?>"><br> <br>
+            <input class="<?php echo $status['avatar'];?>" type="file" name="avatar"> <br><br>
 
             <input type="submit" name="submit" value="Створити користувача">
         </form>
