@@ -4,3 +4,22 @@
 .error{
     border: red solid 2px ;
 }
+.image{
+    width: 90px;
+}
+.day{
+     background: white;
+     color: black;
+ }
+.night{
+    background: #1c1a1a;
+    color: white;
+}
+.link{
+    outline: none;
+    text-decoration: none;
+    padding: 2px 1px 0;
+}
+a:hover{
+    text-decoration: underline;
+}

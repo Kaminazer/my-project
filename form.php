@@ -1,4 +1,12 @@
 <?php
+if (isset($_GET['theme'])) {
+    setcookie('theme', $_GET['theme'], time() + (30 * 24 * 60 * 60), '/');
+    $theme = $_GET['theme'];
+} elseif (isset($_COOKIE['theme'])) {
+    $theme = $_COOKIE['theme'];
+} else {
+    $theme = 'day'; // значення за замовчуванням
+}
 include 'validFunction.php';
     $region =[
         "Автономна республіка Крим",
@@ -138,7 +146,8 @@ include 'validFunction.php';
                 .$user['city']
                 .", "
                 .$user['address']
-                ." був успішно доданий у систему.</p>";
+                ." був успішно доданий у систему.</p><br>";
+            echo "<a class=\"link\" href=\"form.php\">Заповнити форму ще раз</a>";
         }
     }
 ?>
@@ -147,8 +156,15 @@ include 'validFunction.php';
         <title>Create new user </title>
         <link rel="stylesheet" href="css/form.css">
     </head>
-    <body>
+    <body class="<?php echo $theme; ?>">
+
     <?php if (!$hideForm) { ?>
+         <p>Можливі варіанти відображення сторінки: </p>
+         <div class="links">
+             <a class="link" href="form.php?theme=day">Світла тема</a>
+             <a class="link" href="form.php?theme=night">Темна тема</a>
+         </div>
+
         <h1>Create new user</h1>
         <form action="form.php" method="post" enctype="multipart/form-data">
             <label for="POST-name">Ім'я</label><br>
