@@ -1,13 +1,13 @@
 <?php
-if (isset($_GET['theme'])) {
-    setcookie('theme', $_GET['theme'], time() + (30 * 24 * 60 * 60), '/');
-    $theme = $_GET['theme'];
-} elseif (isset($_COOKIE['theme'])) {
-    $theme = $_COOKIE['theme'];
-} else {
-    $theme = 'day'; // значення за замовчуванням
-}
 include 'validFunction.php';
+    if (isset($_GET['theme'])) {
+        setcookie('theme', $_GET['theme'], time() + (30 * 24 * 60 * 60), '/');
+        $theme = $_GET['theme'];
+    } elseif (isset($_COOKIE['theme'])) {
+        $theme = $_COOKIE['theme'];
+    } else {
+        $theme = 'day'; // значення за замовчуванням
+    }
     $region =[
         "Автономна республіка Крим",
         "Волинська область",
@@ -42,6 +42,7 @@ include 'validFunction.php';
     $validRegionValue = "Оберіть один із пунктів";
     $user = [];
 
+    $link = mysqli_connect('localhost', 'root', '357159_Nazarii', 'project_db');
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = [
             "firstName" => filter($_POST["firstName"]),
@@ -135,19 +136,49 @@ include 'validFunction.php';
             $hideForm = true;
             $image = "/image/" . $_FILES["avatar"]["name"];
             echo "<img  class =\"image\" src = \"$image\" alt='avatar'>";
-            echo "<p>Користувач: " .$user['firstName']
-                ." "
-                .$user['lastName']
-                ." "
-                .$user['birthDate']
-                ." року народження, що проживає за адресою: "
-                .$region[$user['region']]
-                .", місто "
-                .$user['city']
-                .", "
-                .$user['address']
-                ." був успішно доданий у систему.</p><br>";
-            echo "<a class=\"link\" href=\"form.php\">Заповнити форму ще раз</a>";
+           $query = "INSERT INTO users (name, last_name, region, city, address, date) 
+                    VALUES ('{$user['firstName']}', 
+                            '{$user['lastName']}', 
+                            '{$region[$user['region']]}', 
+                            '{$user['city']}', 
+                            '{$user['address']}', 
+                            '{$user['birthDate']}'
+                            )";
+
+            $save = mysqli_query($link, $query);
+            if ($save) {
+               echo "<p>Користувач: " . $user['firstName']
+                   . " "
+                   . $user['lastName']
+                   . " "
+                   . $user['birthDate']
+                   . " року народження, що проживає за адресою: "
+                   . $region[$user['region']]
+                   . ", місто "
+                   . $user['city']
+                   . ", "
+                   . $user['address']
+                   . " був успішно доданий у систему.</p><br>";
+               echo "<a class=\"link\" href=\"form.php\">Заповнити форму ще раз</a>";
+           }
+        }
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($_GET['id']) && is_numeric($_GET['id'])) {
+        $hideForm = true;
+        //    $query = "SELECT COUNT(*) FROM users";
+        $query = "SELECT * FROM users WHERE id = {$_GET['id']}";
+        $row = mysqli_query($link, $query);
+        $result = mysqli_fetch_array($row, MYSQLI_ASSOC);
+        if ($result) {
+            echo "<b>Дані про користувача із id: {$_GET['id']}.</b><br><br>";
+            foreach ($result as $key => $item) {
+                echo $key . ": " . $item . "<br>";
+            }
+            echo "<br><a class=\"link\" href=\"form.php\">Повернутись до заповнення форми </a>";
+        } else {
+            echo "Користувача із id: {$_GET['id']} в базі даних не виявлено";
+            echo "<br><br><a class=\"link\" href=\"form.php\">Повернутись до заповнення форми </a>";
         }
     }
 ?>
