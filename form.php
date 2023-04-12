@@ -1,4 +1,5 @@
 <?php
+//ini_set('display_errors', '1');
 include 'validFunction.php';
     if (isset($_GET['theme'])) {
         setcookie('theme', $_GET['theme'], time() + (30 * 24 * 60 * 60), '/');
@@ -45,12 +46,12 @@ include 'validFunction.php';
     $link = mysqli_connect('localhost', 'root', '357159_Nazarii', 'project_db');
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = [
-            "firstName" => filter($_POST["firstName"]),
-            "lastName" => filter($_POST["lastName"]),
-            "region" => (int)filter($_POST["region"]),
-            "city" => filter($_POST["city"]),
-            "address" => filter($_POST["address"]),
-            "birthDate" => filter($_POST["birthDate"]),
+            "firstName" => filter($_POST["firstName"] ?? false),
+            "lastName" => filter($_POST["lastName"] ?? false),
+            "region" => (int)filter($_POST["region"] ?? false),
+            "city" => filter($_POST["city"] ?? false),
+            "address" => filter($_POST["address"] ?? false),
+            "birthDate" => filter($_POST["birthDate"]?? false),
         ];
 
         if (validLength($user['firstName'])) {
@@ -59,7 +60,7 @@ include 'validFunction.php';
         } else {
             $errors[] = "Ім'я має складатимися мінімум із 2, а максимум із 32 символів";
             $status['name'] = 'error';
-            $validData[] ="";
+            $validData[] = "";
         }
 
         if (validLength($user['lastName']) && validLastName($user['lastName'])) {
@@ -72,7 +73,8 @@ include 'validFunction.php';
         }
 
         $validRegion = array_key_exists($user['region'], $region);
-        if (!$validRegion || $_POST['region'] === "" ){
+
+        if (!$validRegion || (isset($_POST['region']) && $_POST['region'] === "" )){
             $errors[] = "Виберіть область";
             $status['region'] = 'error';
             $validData[] ="";
@@ -110,7 +112,7 @@ include 'validFunction.php';
             $validData[] ="";
         }
 
-        if (!empty($_FILES["avatar"])) {
+        if (!empty($_FILES["avatar"]["name"])) {
             $blacklist = ['.php', '.phtml', '.php3', '.php4'];
             $errorFile = false;
             foreach ($blacklist as $ext) {
@@ -126,6 +128,8 @@ include 'validFunction.php';
                     $errors[] = "Невдалося перемістити файл";
                 }
             }
+        } else {
+            $errors[] = "Файл не обрано.";
         }
 
         if (!empty($errors)){
@@ -200,15 +204,15 @@ include 'validFunction.php';
         <form action="form.php" method="post" enctype="multipart/form-data">
             <label for="POST-name">Ім'я</label><br>
             <input class="<?php echo $status['name'];?>" id="POST-name" type="text" name="firstName"
-                   value="<?php echo $validData[0];?>"><br> <br>
+                   value="<?php echo $validData[0] ?? "";?>"><br> <br>
 
             <label for="POST-firstName">Прізвище</label><br>
             <input class="<?php echo $status['lastName'];?>" id="POST-firstName" type="text" name="lastName"
-                   value="<?php echo $validData[1];?>"><br> <br>
+                   value="<?php echo $validData[1] ?? "";?>"><br> <br>
 
             <label for="POST-region">Область</label><br>
             <select class="<?php echo $status['region'];?>" id="POST-region" name="region" >
-                <option value="<?php echo $validData[2];?>"><?php echo $validRegionValue;?></option>
+                <option value="<?php echo $validData[2] ?? "";?>"><?php echo $validRegionValue;?></option>
                 <?php
                 foreach ($region as $key => $value) {
                     echo "<option value=\"$key\">$value</option> ";
@@ -219,15 +223,15 @@ include 'validFunction.php';
 
             <label for="POST-city">Місто</label><br>
             <input class="<?php echo $status['city'];?>" id="POST-city" type="text" name="city"
-                   value="<?php echo $validData[3];?>"><br><br>
+                   value="<?php echo $validData[3] ?? "";?>"><br><br>
 
             <label for="POST-address">Адреса</label><br>
             <input class="<?php echo $status['address'];?>" id="POST-address" type="text" name="address"
-                   value="<?php echo $validData[4];?>"><br> <br>
+                   value="<?php echo $validData[4] ?? "";?>"><br> <br>
 
             <label for="POST-date">Дата народження</label><br>
             <input class="<?php echo $status['date'];?>" id="POST-date" type="date" name="birthDate"
-                   value="<?php echo $validData[5];?>"><br> <br>
+                   value="<?php echo $validData[5] ?? "";?>"><br> <br>
             <input class="<?php echo $status['avatar'];?>" type="file" name="avatar"> <br><br>
 
             <input type="submit" name="submit" value="Створити користувача">
